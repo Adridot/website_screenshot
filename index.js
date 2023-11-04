@@ -12,8 +12,8 @@ const app = express();
 app.use(express.json());
 
 // Set up a route to capture a specific element from a website
-app.post('/capture', async (req, res) => {
-    const { url, elementSelector } = req.body;
+app.get('/capture', async (req, res) => {
+    const { url, elementSelector } = req.query;
 
     if (!url) {
         return res.status(400).send('URL is required');
