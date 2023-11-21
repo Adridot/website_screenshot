@@ -13,9 +13,9 @@ app.use(express.json());
 
 // Set up a route to capture a specific element from a website
 app.get('/capture', async (req, res) => {
-    const { url, elementSelector } = req.query;
+    const { url, elementSelector, timezone } = req.query;
 
-    console.log(`Capturing screenshot from ${url} with selector ${elementSelector}`);
+    console.log(`Capturing screenshot from ${url} with selector ${elementSelector} in timezone ${timezone}`);
 
     if (!url) {
         return res.status(400).send('URL is required');
@@ -27,7 +27,9 @@ app.get('/capture', async (req, res) => {
             args: ['--no-sandbox', '--disable-setuid-sandbox']
         });
         const page = await browser.newPage();
+        await page.emulateTimezone(timezone); // set timezone to client's timezone
         await page.goto(url);
+        await page.waitForDelay(500); // wait for 5 seconds
         const element = await page.$(elementSelector);
         if (!element) {
             console.error(`Element not found with selector ${elementSelector}`);
