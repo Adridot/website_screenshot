@@ -1,5 +1,5 @@
 import express from 'express';
-import captureWebsite from 'capture-website';
+import puppeteer from 'puppeteer';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -20,9 +20,15 @@ app.get('/capture', async (req, res) => {
     }
 
     try {
-        const screenshot = await captureWebsite.buffer(url, {
-            element: elementSelector
+        const browser = await puppeteer.launch({
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
         });
+        const page = await browser.newPage();
+        await page.goto(url);
+        const element = await page.$(elementSelector);
+        const screenshot = await element.screenshot();
+        await browser.close();
+
         fs.writeFileSync('screenshot.png', screenshot);
         res.sendFile('screenshot.png', { root: __dirname });
     } catch (error) {
