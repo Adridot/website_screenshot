@@ -15,7 +15,7 @@ app.use(express.json());
 app.get('/capture', async (req, res) => {
     const { url, elementSelector } = req.query;
 
-    console.log(`Capturing screenshot from ${url} with selector ${elementSelector} in timezone ${timezone}`);
+    console.log(`Capturing screenshot from ${url} with selector ${elementSelector}`);
 
     if (!url) {
         return res.status(400).send('URL is required');
@@ -27,7 +27,7 @@ app.get('/capture', async (req, res) => {
             args: ['--no-sandbox', '--disable-setuid-sandbox']
         });
         const page = await browser.newPage();
-        await page.emulateTimezone('Europe/Paris'); // set timezone to client's timezone
+        await page.emulateTimezone('Europe/Paris'); // set timezone to Paris
         await page.goto(url);
         const element = await page.$(elementSelector);
         if (!element) {
