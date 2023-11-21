@@ -29,7 +29,7 @@ app.get('/capture', async (req, res) => {
         const page = await browser.newPage();
         await page.emulateTimezone(timezone); // set timezone to client's timezone
         await page.goto(url);
-        await page.waitForDelay(500); // wait for 5 seconds
+        await new Promise(r => setTimeout(r, 500)); // wait for 5 seconds
         const element = await page.$(elementSelector);
         if (!element) {
             console.error(`Element not found with selector ${elementSelector}`);
