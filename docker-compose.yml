@@ -5,5 +5,5 @@ services:
     ports:
       - "3001:3001"
     volumes:
-      - /home/ubuntu/website_screenshot:/app
-      - /app/node_modules
+      - ./:/app
+      - ./app/node_modules
