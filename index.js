@@ -1,8 +1,8 @@
 import express from 'express';
 import puppeteer from 'puppeteer-core';
 import fs from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import {fileURLToPath} from 'url';
+import {dirname} from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,7 +13,7 @@ app.use(express.json());
 
 // Set up a route to capture a specific element from a website
 app.get('/capture', async (req, res) => {
-    const { url, elementSelector } = req.query;
+    const {url, elementSelector} = req.query;
 
     console.log(`Capturing screenshot from ${url} with selector ${elementSelector}`);
 
@@ -37,7 +37,7 @@ app.get('/capture', async (req, res) => {
         await browser.close();
 
         fs.writeFileSync('screenshot.png', screenshot);
-        res.sendFile('screenshot.png', { root: __dirname });
+        res.sendFile('screenshot.png', {root: __dirname});
     } catch (error) {
         console.error(`Error capturing screenshot: ${error}`);
         res.status(500).send('Error capturing screenshot');
