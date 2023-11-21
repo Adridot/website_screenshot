@@ -1,3 +1,17 @@
+import express from 'express';
+import puppeteer from 'puppeteer-core';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const app = express();
+
+app.use(express.json());
+
+// Set up a route to capture a specific element from a website
 app.get('/capture', async (req, res) => {
     const { url, elementSelector } = req.query;
 
