@@ -1,5 +1,5 @@
 import express from 'express';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -21,6 +21,7 @@ app.get('/capture', async (req, res) => {
 
     try {
         const browser = await puppeteer.launch({
+            executablePath: '/usr/bin/chromium', // use installed Chromium
             args: ['--no-sandbox', '--disable-setuid-sandbox']
         });
         const page = await browser.newPage();
