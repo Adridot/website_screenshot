@@ -5,5 +5,4 @@ services:
     ports:
       - "3001:3001"
     volumes:
-      - ./:/app
-      - ./app/node_modules
+      - website_screenshot_files:/app
