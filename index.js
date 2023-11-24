@@ -51,7 +51,7 @@ const PORT = process.env.PORT || 3001;
 // SSL certificate
 const privateKey = fs.readFileSync('certs/privkey1.pem', 'utf8');
 const certificate = fs.readFileSync('certs/cert1.pem', 'utf8');
-const ca = fs.readFileSync('certs/ca.pem', 'utf8');
+const ca = fs.readFileSync('certs/chain1.pem', 'utf8');
 
 const credentials = {
     key: privateKey,
