@@ -1,9 +1,8 @@
 import express from 'express';
 import puppeteer from 'puppeteer-core';
 import fs from 'fs';
-import https from 'https';
-import {fileURLToPath} from 'url';
-import {dirname} from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -14,7 +13,7 @@ app.use(express.json());
 
 // Set up a route to capture a specific element from a website
 app.get('/capture', async (req, res) => {
-    const {url, elementSelector} = req.query;
+    const { url, elementSelector } = req.query;
 
     console.log(`Capturing screenshot from ${url} with selector ${elementSelector}`);
 
@@ -39,7 +38,7 @@ app.get('/capture', async (req, res) => {
         await browser.close();
 
         fs.writeFileSync('screenshot.png', screenshot);
-        res.sendFile('screenshot.png', {root: __dirname});
+        res.sendFile('screenshot.png', { root: __dirname });
     } catch (error) {
         console.error(`Error capturing screenshot: ${error}`);
         res.status(500).send('Error capturing screenshot');
@@ -47,20 +46,6 @@ app.get('/capture', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
-
-// SSL certificate
-const privateKey = fs.readFileSync('certs/privkey1.pem', 'utf8');
-const certificate = fs.readFileSync('certs/cert1.pem', 'utf8');
-const ca = fs.readFileSync('certs/chain1.pem', 'utf8');
-
-const credentials = {
-    key: privateKey,
-    cert: certificate,
-    ca: ca
-};
-
-const httpsServer = https.createServer(credentials, app);
-
-httpsServer.listen(PORT, () => {
-    console.log(`HTTPS Server is running on port ${PORT}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
